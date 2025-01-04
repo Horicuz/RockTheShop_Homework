@@ -8,6 +8,7 @@ Angajat::Angajat()
     prenume = "";
     CNP = "";
     ID++;
+    salariu = 0;
 }
 
 Angajat::Angajat(string lastname, string firstname, string NPC, time_t Date)
@@ -42,6 +43,7 @@ Angajat::Angajat(string lastname, string firstname, string NPC, time_t Date)
     CNP = NPC;
     DataAngajare = Date;
     ID++;
+    salariu = 0;
 }
 
 Angajat::Angajat(const Angajat &angajat)
@@ -51,6 +53,7 @@ Angajat::Angajat(const Angajat &angajat)
     CNP = angajat.CNP;
     DataAngajare = angajat.DataAngajare;
     ID = angajat.ID;
+    salariu = angajat.salariu;
 }
 
 void Angajat::AfisareAngajat()
@@ -63,10 +66,16 @@ void Angajat::AfisareAngajat()
          << (timeinfo->tm_mon + 1) << "-"
          << timeinfo->tm_mday << endl;
     cout << "ID: " << ID << endl;
+    cout << "Salariu: " << salariu << endl;
 }
 
 void Angajat::SetNume(string lastname)
 {
+    if (lastname.length() < 3 || lastname.length() > 30)
+    {
+        cout << "Numele trebuie sa aiba minim 3 caractere dar nu mai mult de 30" << endl;
+        return;
+    }
     nume = lastname;
 }
 
@@ -143,13 +152,48 @@ bool Angajat::ValidareCNP(string CNP)
 
 istream &operator>>(istream &in, Angajat &angajat)
 {
+    // validare NUME
     cout << "Nume: ";
-    in >> angajat.nume;
+    string nume, prenume;
+    in >> nume;
+    if (nume.length() > 3 && nume.length() < 30)
+        angajat.nume = nume;
+    else
+    {
+        cout << "Nume invalid!" << endl;
+        return;
+    }
+    // validare PRENUME
     cout << "Prenume: ";
-    in >> angajat.prenume;
+    in >> prenume;
+    if (prenume.length() > 3 && prenume.length() < 30)
+        angajat.prenume = prenume;
+    else
+    {
+        cout << "Prenume invalid!" << endl;
+        return;
+    }
+    // validare CNP
     cout << "CNP: ";
-    in >> angajat.CNP;
-    cout << "Data angajarii: ";
-    in >> angajat.DataAngajare;
+    string CNP;
+    in >> CNP;
+    if (angajat.ValidareCNP(CNP))
+        angajat.CNP = CNP;
+    else
+    {
+        cout << "CNP invalid!" << endl;
+        return;
+    }
+    // DATA ANGAJARII
+    cout << "Data angajarii: (ZZ/LL/AA)";
+    int day, month, year;
+    in >> day >> month >> year;
+
+    struct tm tm = {0};
+    tm.tm_mday = day;
+    tm.tm_mon = month - 1;
+    tm.tm_year = year - 1900;
+    angajat.DataAngajare = mktime(&tm);
+
     return in;
 }
