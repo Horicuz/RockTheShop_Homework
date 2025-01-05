@@ -11,6 +11,6 @@ public:
     Manager(string nume, string prenume, string CNP, time_t DataAngajare);
     Manager(const Manager &manager);
     void AfisareAngajat();
+    void CitireAngajat(istream &dev);
     void CalculeazaSalariu();
-    friend istream &operator>>(istream &in, Manager &manager);
 };

@@ -20,15 +20,16 @@ public:
     Angajat(string nume, string prenume, string CNP, time_t DataAngajare); // constructor cu parametri
     Angajat(const Angajat &angajat);                                       // constructor de copiere
     virtual void AfisareAngajat();                                         // afiseaza datele angajatului
+    virtual void CitireAngajat(istream &dev);                              // citeste datele angajatului
     void SetNume(string nume);                                             // daca vrea sa isi schimbe numele
 
-    // string GetNume();
-    // string GetPrenume();
+    string GetNume();
+    string GetPrenume();
     // string GetCNP();
     // string GetDataAngajare();
     // int GetID();
-    // float GetSalariu();
-    virtual void CalculeazaSalariu() {} // calculeaza salariul
-    bool ValidareCNP(string CNP);       // verifica daca CNP-ul este valid
-    friend istream &operator>>(istream &in, Angajat &angajat);
+    float GetSalariu();
+
+    virtual void CalculeazaSalariu(); // calculeaza salariul
+    bool ValidareCNP(string CNP);     // verifica daca CNP-ul este valid
 };

@@ -43,7 +43,7 @@ Angajat::Angajat(string lastname, string firstname, string NPC, time_t Date)
     CNP = NPC;
     DataAngajare = Date;
     ID++;
-    salariu = 0;
+    CalculeazaSalariu();
 }
 
 Angajat::Angajat(const Angajat &angajat)
@@ -69,6 +69,52 @@ void Angajat::AfisareAngajat()
     cout << "Salariu: " << salariu << endl;
 }
 
+void Angajat::CitireAngajat(istream &dev)
+{
+    // validare NUME
+    cout << "Nume: ";
+    string nume, prenume;
+    dev >> nume;
+    if (nume.length() > 3 && nume.length() < 30)
+        this->nume = nume;
+    else
+    {
+        cout << "Nume invalid!" << endl;
+        return;
+    }
+    // validare PRENUME
+    cout << "Prenume: ";
+    dev >> prenume;
+    if (prenume.length() > 3 && prenume.length() < 30)
+        this->prenume = prenume;
+    else
+    {
+        cout << "Prenume invalid!" << endl;
+        return;
+    }
+    // validare CNP
+    cout << "CNP: ";
+    string CNP;
+    dev >> CNP;
+    if (ValidareCNP(CNP))
+        this->CNP = CNP;
+    else
+    {
+        return;
+    }
+    // DATA ANGAJARII
+    cout << "Data angajarii: (ZZ/LL/AA)";
+    int day, month, year;
+    dev >> day >> month >> year;
+
+    struct tm tm = {0};
+    tm.tm_mday = day;
+    tm.tm_mon = month - 1;
+    tm.tm_year = year - 1900;
+    this->DataAngajare = mktime(&tm);
+    CalculeazaSalariu();
+}
+
 void Angajat::SetNume(string lastname)
 {
     if (lastname.length() < 3 || lastname.length() > 30)
@@ -83,20 +129,37 @@ bool Angajat::ValidareCNP(string CNP)
 {
     if (CNP.length() != 13)
     {
+        cout << "Prea multe caractere! (max 13)" << endl;
         return false;
     }
     for (int i = 0; i < CNP.length(); i++)
     {
         if (!isdigit(CNP[i]))
         {
+            cout << "CNP contine doar cifre!" << endl;
             return false;
         }
     }
 
     // Extract birth date from CNP
     int year = stoi(CNP.substr(1, 2));
+    if (year < 0 || year > 99)
+    {
+        cout << "CNP invalid!" << endl;
+        return false;
+    }
     int month = stoi(CNP.substr(3, 2));
+    if (month < 1 || month > 12)
+    {
+        cout << "CNP invalid!" << endl;
+        return false;
+    }
     int day = stoi(CNP.substr(5, 2));
+    if (day < 1 || day > 31)
+    {
+        cout << "CNP invalid!" << endl;
+        return false;
+    }
 
     // Determine century
     int century = 0;
@@ -115,13 +178,13 @@ bool Angajat::ValidareCNP(string CNP)
         century = 2000;
         break;
     default:
+        cout << "CNP invalid!" << endl;
         return false;
     }
     year += century;
 
     // Check if the person is over 18 years old
-    auto now = std::chrono::system_clock::now();
-    time_t now_c = std::chrono::system_clock::to_time_t(now);
+    time_t now_c = time(0);
     struct tm *parts = localtime(&now_c);
 
     int current_year = 1900 + parts->tm_year;
@@ -130,18 +193,21 @@ bool Angajat::ValidareCNP(string CNP)
 
     if (current_year - year < 18)
     {
+        cout << "Persoana nu are 18 ani!" << endl;
         return false;
     }
     else if (current_year - year == 18)
     {
         if (current_month < month)
         {
+            cout << "Persoana nu are 18 ani!" << endl;
             return false;
         }
         else if (current_month == month)
         {
             if (current_day < day)
             {
+                cout << "Persoana nu are 18 ani!" << endl;
                 return false;
             }
         }
@@ -150,50 +216,15 @@ bool Angajat::ValidareCNP(string CNP)
     return true; // CNP is valid
 }
 
-istream &operator>>(istream &in, Angajat &angajat)
+void Angajat::CalculeazaSalariu()
 {
-    // validare NUME
-    cout << "Nume: ";
-    string nume, prenume;
-    in >> nume;
-    if (nume.length() > 3 && nume.length() < 30)
-        angajat.nume = nume;
-    else
-    {
-        cout << "Nume invalid!" << endl;
-        return;
-    }
-    // validare PRENUME
-    cout << "Prenume: ";
-    in >> prenume;
-    if (prenume.length() > 3 && prenume.length() < 30)
-        angajat.prenume = prenume;
-    else
-    {
-        cout << "Prenume invalid!" << endl;
-        return;
-    }
-    // validare CNP
-    cout << "CNP: ";
-    string CNP;
-    in >> CNP;
-    if (angajat.ValidareCNP(CNP))
-        angajat.CNP = CNP;
-    else
-    {
-        cout << "CNP invalid!" << endl;
-        return;
-    }
-    // DATA ANGAJARII
-    cout << "Data angajarii: (ZZ/LL/AA)";
-    int day, month, year;
-    in >> day >> month >> year;
-
-    struct tm tm = {0};
-    tm.tm_mday = day;
-    tm.tm_mon = month - 1;
-    tm.tm_year = year - 1900;
-    angajat.DataAngajare = mktime(&tm);
-
-    return in;
+    // Salariul de baza este 3500
+    salariu = 3500;
+    // Pentru fiecare an de vechime la companie se adauga 100 de lei la salariu
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+    int current_year = 1900 + ltm->tm_year;
+    struct tm *timeinfo = localtime(&DataAngajare);
+    int year = 1900 + timeinfo->tm_year;
+    salariu += (current_year - year) * 100;
 }

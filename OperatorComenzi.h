@@ -11,6 +11,7 @@ public:
     OperatorComenzi(string nume, string prenume, string CNP, time_t DataAngajare);
     OperatorComenzi(const OperatorComenzi &operatorcomenzi);
     void AfisareAngajat();
+    void CitireAngajat(istream &dev);
     void CalculeazaSalariu();
-    friend istream &operator>>(istream &in, OperatorComenzi &operatorcomenzi);
+    bool CheckBirthDay(string CNP);
 };
