@@ -1,5 +1,4 @@
 #include "OperatorComenzi.h"
-using namespace std;
 
 OperatorComenzi::OperatorComenzi() : Angajat()
 {
@@ -15,9 +14,12 @@ OperatorComenzi::OperatorComenzi(const OperatorComenzi &operatorcomenzi) : Angaj
 
 void OperatorComenzi::AfisareAngajat()
 {
+    cout << "-------------------------" << endl;
     cout << "Pozitie: Operator comenzi" << endl;
     cout << "-------------------------" << endl;
     Angajat::AfisareAngajat();
+    cout << "-------------------------" << endl;
+    cout << endl;
 }
 
 void OperatorComenzi::CitireAngajat(istream &dev)
@@ -27,6 +29,8 @@ void OperatorComenzi::CitireAngajat(istream &dev)
 
 void OperatorComenzi::CalculeazaSalariu()
 {
+    if (CompletInregistrat() == false)
+        return;
     Angajat::CalculeazaSalariu();
     salariu *= 1; // OperatorComenzi are coeficient 1
     if (CheckBirthDay(CNP))
@@ -34,6 +38,17 @@ void OperatorComenzi::CalculeazaSalariu()
         salariu += 100;
     }
     // se adauga si de la comenzi...
+}
+
+void OperatorComenzi::SetCNP(string NPC)
+{
+    if (!ValidareCNP(NPC))
+    {
+        cout << "CNP invalid" << endl;
+        return;
+    }
+    CNP = NPC;
+    CalculeazaSalariu();
 }
 
 bool OperatorComenzi::CheckBirthDay(string CNP)

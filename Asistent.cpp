@@ -14,9 +14,12 @@ Asistent::Asistent(const Asistent &asistent) : Angajat(asistent)
 
 void Asistent::AfisareAngajat()
 {
+    cout << "-------------------------" << endl;
     cout << "Pozitie: Asistent" << endl;
     cout << "-------------------------" << endl;
     Angajat::AfisareAngajat();
+    cout << "-------------------------" << endl;
+    cout << endl;
 }
 
 void Asistent::CitireAngajat(istream &dev)
@@ -26,12 +29,25 @@ void Asistent::CitireAngajat(istream &dev)
 
 void Asistent::CalculeazaSalariu()
 {
+    if (CompletInregistrat() == false)
+        return;
     Angajat::CalculeazaSalariu();
     salariu *= 0.75; // Asistent are coeficient 1.1
     if (CheckBirthDay(CNP))
     {
         salariu += 100;
     }
+}
+
+void Asistent::SetCNP(string NPC)
+{
+    if (!ValidareCNP(NPC))
+    {
+        cout << "CNP invalid" << endl;
+        return;
+    }
+    CNP = NPC;
+    CalculeazaSalariu();
 }
 
 bool Asistent::CheckBirthDay(string CNP)
