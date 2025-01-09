@@ -4,6 +4,10 @@
 
 using namespace std;
 
+ofstream raportare1("raport1.csv");
+ofstream raportare2("raport2.csv");
+ofstream raportare3("raport3.csv");
+
 void gestiuneAngajati(vector<Angajat *> angajati)
 {
     while (1)
@@ -112,14 +116,48 @@ void procesareComenzi()
     cout << "0. Inapoi" << endl;
 }
 
-void raportare()
+void raportare(vector<Angajat *> angajati)
 {
-    cout << "Raportare" << endl;
-    cout << "-----------------" << endl;
-    cout << "1. Angajatul cu cele mai multe comenzi procesate" << endl;
-    cout << "2. Top 3 angajati cu cele mai valoroase comenzi" << endl;
-    cout << "3. Top 3 angajati cu cel mai mare salariu" << endl;
-    cout << "0. Inapoi" << endl;
+    while (1)
+    {
+        system("clear");
+        cout << "Raportare" << endl;
+        cout << "-----------------" << endl;
+        cout << "1. Angajatul cu cele mai multe comenzi procesate" << endl;
+        cout << "2. Top 3 angajati cu cele mai valoroase comenzi" << endl;
+        cout << "3. Top 3 angajati cu cel mai mare salariu" << endl;
+        cout << "0. Inapoi" << endl;
+        cout << "-----------------" << endl;
+        cout << "Introduceti optiunea: ";
+        int option;
+        cin >> option;
+        if (option < 0 || option > 3)
+        {
+            cout << "Optiune invalida! Introduceti optiunea: ";
+        }
+        if (option == 0)
+        {
+            return;
+        }
+        if (option == 1)
+        {
+            // Angajatul cu cele mai multe comenzi procesate
+        }
+        if (option == 2)
+        {
+            // Top 3 angajati cu cele mai valoroase comenzi
+        }
+        if (option == 3)
+        {
+            system("clear");
+            top3salariu(angajati, raportare3);
+            cout << "Raportul a fost generat cu succes!" << endl;
+            cout << "Fisierul raport3.csv a fost creat!" << endl;
+            cout << "Apasati orice tasta pentru a continua...";
+            char c;
+            cin >> c;
+        }
+    }
 }
 
 void verificaFunctionalitateaMagazinului(vector<Angajat *> angajati)
@@ -197,7 +235,7 @@ void meniu(vector<Angajat *> angajati)
         if (option == 4)
         {
             system("clear");
-            raportare();
+            raportare(angajati);
         }
         if (option == 5)
         {
@@ -214,7 +252,17 @@ int main()
     ofstream RaportSalarii("raport1.csv");
 
     Manager *Yes = new Manager("John", "Smith", "5050205460021", time(0) - 50000000);
+    Asistent *No = new Asistent("Jane", "Doe", "2950101460021", time(0) - 70000000);
+    OperatorComenzi *Maybe = new OperatorComenzi("Jinn", "Darr", "1850202460021", time(0) - 80000000);
+    OperatorComenzi *Maybe2 = new OperatorComenzi("Joey", "Sarr", "2750303460021", time(0) - 400000);
+    OperatorComenzi *Maybe3 = new OperatorComenzi("Jinn", "Darr", "1850202460021", time(0) - 80000000);
+    OperatorComenzi *Maybe4 = new OperatorComenzi("Joey", "Sarr", "2750303460021", time(0) - 400000);
     angajati.push_back(Yes);
+    angajati.push_back(No);
+    angajati.push_back(Maybe);
+    angajati.push_back(Maybe2);
+    angajati.push_back(Maybe3);
+    angajati.push_back(Maybe4);
     // angajati[1] = new OperatorComenzi("Jane", "Does", "2950101460021", time(0) - 50000000);
     // angajati[2] = new OperatorComenzi("Jinn", "Darr", "1850202460021", time(0) - 70000000);
     // angajati[3] = new OperatorComenzi("Joey", "Sarr", "2750303460021", time(0) - 80000000);
