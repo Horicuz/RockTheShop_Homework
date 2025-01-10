@@ -82,6 +82,7 @@ void StergeAngajat(vector<Angajat *> &angajati, int ID)
     {
         if (angajati[i]->GetID() == ID)
         {
+            delete angajati[i];
             angajati.erase(angajati.begin() + i);
             return;
         }

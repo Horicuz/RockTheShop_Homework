@@ -5,10 +5,10 @@ class Manager : public Angajat
 {
 public:
     Manager();
-    Manager(string nume, string prenume, string CNP, time_t DataAngajare);
-    Manager(const Manager &manager);
+    Manager(string, string, string, time_t);
+    Manager(const Manager &);
     void AfisareAngajat();
-    void CitireAngajat(istream &dev);
-    void SetCNP(string NPC);
+    void CitireAngajat(istream &);
+    void SetCNP(string);
     void CalculeazaSalariu();
 };

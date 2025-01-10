@@ -63,3 +63,37 @@ bool OperatorComenzi::CheckBirthDay(string CNP)
     }
     return false;
 }
+
+int OperatorComenzi::GetComenziCurente()
+{
+    return comenzi_curente;
+}
+
+void OperatorComenzi::AdaugaComanda(comanda *comanda)
+{
+    if (comanda->procesabila() == false)
+    {
+        cout << "Comanda nu poate fi procesata!" << endl;
+        return;
+    }
+    if (comenzi_curente == 3)
+    {
+        cout << "Operatorul are deja 3 comenzi in lucru!" << endl;
+        return;
+    }
+    comenzi.push(comanda);
+    comenzi_curente++;
+}
+
+void OperatorComenzi::StergeComanda()
+{
+    if (comenzi_curente == 0)
+    {
+        cout << "Operatorul nu are nicio comanda in lucru!" << endl;
+        return;
+    }
+    comanda *Com = comenzi.front();
+    comenzi.pop();
+    comenzi_curente--;
+    comenzi_istoric.push_back(Com);
+}

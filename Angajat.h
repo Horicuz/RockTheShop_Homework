@@ -19,17 +19,17 @@ protected:
     float salariu;       // salariul
 
 public:
-    Angajat();                                                             // constructor fara parametri
-    Angajat(string nume, string prenume, string CNP, time_t DataAngajare); // constructor cu parametri
-    Angajat(const Angajat &angajat);                                       // constructor de copiere
-    virtual void AfisareAngajat();                                         // afiseaza datele angajatului
-    virtual void CitireAngajat(istream &dev);                              // citeste datele angajatului
+    Angajat();                               // constructor fara parametri
+    Angajat(string, string, string, time_t); // constructor cu parametri
+    Angajat(const Angajat &);                // constructor de copiere
+    virtual void AfisareAngajat();           // afiseaza datele angajatului
+    virtual void CitireAngajat(istream &);   // citeste datele angajatului
 
-    void SetNume(string nume);       // daca vrea sa isi schimbe numele
-    void SetPrenume(string prenume); // daca vrea sa isi schimbe prenumele
+    void SetNume(string);    // daca vrea sa isi schimbe numele
+    void SetPrenume(string); // daca vrea sa isi schimbe prenumele
 
-    virtual void SetCNP(string CNP);           // daca vrea sa schimbe CNP-ul (virtual pentru ca in Asistent si OperatorComenzi se verifica si luna de nastere)
-    void SetDataAngajare(time_t DataAngajare); // daca vrea sa schimbe data angajarii
+    virtual void SetCNP(string);  // daca vrea sa schimbe CNP-ul (virtual pentru ca in Asistent si OperatorComenzi se verifica si luna de nastere)
+    void SetDataAngajare(time_t); // daca vrea sa schimbe data angajarii
 
     string GetNume();
     string GetPrenume();
@@ -39,6 +39,6 @@ public:
     float GetSalariu();
 
     virtual void CalculeazaSalariu(); // calculeaza salariul
-    bool ValidareCNP(string CNP);     // verifica daca CNP-ul este valid
+    bool ValidareCNP(string);         // verifica daca CNP-ul este valid
     bool CompletInregistrat();        // verifica daca angajatul este complet inregistrat
 };

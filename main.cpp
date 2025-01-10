@@ -1,5 +1,6 @@
 #include "raportari.h"
 #include "GestionariAngajati.h"
+#include "GestionariProduse.h"
 #include <cstdlib>
 
 using namespace std;
@@ -8,7 +9,7 @@ ofstream raportare1("raport1.csv");
 ofstream raportare2("raport2.csv");
 ofstream raportare3("raport3.csv");
 
-void gestiuneAngajati(vector<Angajat *> angajati)
+void gestiuneAngajati(vector<Angajat *> &angajati)
 {
     while (1)
     {
@@ -94,15 +95,86 @@ void gestiuneAngajati(vector<Angajat *> angajati)
     }
 }
 
-void gestiuneStoc()
+void gestiuneStoc(map<int, Produs *> catalog)
 {
-    cout << "Gestiune stoc" << endl;
-    cout << "-----------------" << endl;
-    cout << "1. Adauga produs" << endl;
-    cout << "2. Afiseaza produse" << endl;
-    cout << "3. Modifica produs" << endl;
-    cout << "4. Sterge produs" << endl;
-    cout << "0. Inapoi" << endl;
+    while (1)
+    {
+        cout << "Gestiune stoc" << endl;
+        cout << "-----------------" << endl;
+        cout << "1. Adauga produs" << endl;
+        cout << "2. Afiseaza produse" << endl;
+        cout << "3. Modifica produs" << endl;
+        cout << "4. Sterge produs" << endl;
+        cout << "0. Inapoi" << endl;
+        int option;
+        cin >> option;
+        if (option < 0 || option > 5)
+        {
+            cout << "Optiune invalida! Introduceti optiunea: ";
+        }
+        if (option == 0)
+        {
+            return;
+        }
+        if (option == 1)
+        {
+            system("clear");
+            AdaugaProdus(catalog);
+            cout << "----------------------------------------" << endl;
+            cout << "Apasati orice tasta pentru a continua...";
+            char c;
+            cin >> c;
+        }
+        if (option == 2)
+        {
+            system("clear");
+            AfisareProduse(catalog);
+            cout << endl;
+            cout << "----------------------------------------" << endl;
+            cout << "Apasati orice tasta pentru a continua...";
+            char c;
+            cin >> c;
+        }
+        if (option == 3)
+        {
+            system("clear");
+            cout << "Introduceti ID-ul angajatului: ";
+            int ID;
+            cin >> ID;
+            ModificaStocProdus(catalog, ID);
+            cout << endl;
+            cout << "----------------------------------------" << endl;
+            cout << "Apasati orice tasta pentru a continua...";
+            char c;
+            cin >> c;
+        }
+        if (option == 4)
+        {
+            system("clear");
+            cout << "Introduceti ID-ul angajatului: ";
+            int ID;
+            cin >> ID;
+            StergeProdus(catalog, ID);
+            cout << endl;
+            cout << "----------------------------------------" << endl;
+            cout << "Apasati orice tasta pentru a continua...";
+            char c;
+            cin >> c;
+        }
+        if (option == 5)
+        {
+            system("clear");
+            cout << "Introduceti ID-ul angajatului: ";
+            int ID;
+            cin >> ID;
+            AfisareProdus(catalog, ID);
+            cout << endl;
+            cout << "----------------------------------------" << endl;
+            cout << "Apasati orice tasta pentru a continua...";
+            char c;
+            cin >> c;
+        }
+    }
 }
 
 void procesareComenzi()
@@ -116,7 +188,7 @@ void procesareComenzi()
     cout << "0. Inapoi" << endl;
 }
 
-void raportare(vector<Angajat *> angajati)
+void raportare(vector<Angajat *> angajati, map<int, Produs *> catalog)
 {
     while (1)
     {
@@ -160,7 +232,7 @@ void raportare(vector<Angajat *> angajati)
     }
 }
 
-void verificaFunctionalitateaMagazinului(vector<Angajat *> angajati)
+void verificaFunctionalitateaMagazinului(vector<Angajat *> angajati, map<int, Produs *> catalog)
 {
     // verificare: minim 1 manager, minim 3 operatori, minim 1 asistent
     int manageri = 0, operatori = 0, asistenti = 0;
@@ -192,9 +264,35 @@ void verificaFunctionalitateaMagazinului(vector<Angajat *> angajati)
         return;
     }
     // Dacă magazinul nu are în stoc măcar 2 produse din fiecare tip nu poate funcționa
-}
+    int artVest = 0, discuri = 0, discuriVintage = 0;
+    for (auto produs : catalog)
+    {
+        if (dynamic_cast<ArtVest *>(produs.second))
+        {
+            artVest++;
+        }
+        if (dynamic_cast<CD *>(produs.second))
+        {
+            discuri++;
+        }
+        if (dynamic_cast<Vinil *>(produs.second))
+        {
+            discuri++;
+        }
+        if (dynamic_cast<DiscuriVintage *>(produs.second))
+        {
+            discuriVintage++;
+        }
+    }
 
-void meniu(vector<Angajat *> angajati)
+    if (artVest < 2 || discuri < 2 || discuriVintage < 2)
+    {
+        cout << "Magazinul nu poate functiona!" << endl;
+        cout << "Prea putine produse" << endl;
+        return;
+    }
+}
+void meniu(vector<Angajat *> angajati, map<int, Produs *> catalog)
 {
     while (1)
     {
@@ -226,7 +324,7 @@ void meniu(vector<Angajat *> angajati)
         }
         if (option == 2)
         {
-            gestiuneStoc();
+            gestiuneStoc(catalog);
         }
         if (option == 3)
         {
@@ -235,7 +333,7 @@ void meniu(vector<Angajat *> angajati)
         if (option == 4)
         {
             system("clear");
-            raportare(angajati);
+            raportare(angajati, catalog);
         }
         if (option == 5)
         {
