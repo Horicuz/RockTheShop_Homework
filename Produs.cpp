@@ -187,3 +187,7 @@ bool Produs::CompletInregistrat()
     }
     return true;
 }
+
+void Produs::CalculeazaPret()
+{
+}

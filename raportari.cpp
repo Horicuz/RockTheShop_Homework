@@ -1,9 +1,23 @@
 #include "raportari.h"
 
-void top3salariu(vector<Angajat *> angajati, ofstream &out)
+void topAngajatNrComenzi(vector<Angajat *> angajati, ofstream &out)
 {
+    for (auto angajat : angajati)
+    {
+        if (dynamic_cast<OperatorComenzi *>(angajat))
+        {
+        }
+    }
+}
+void top3salariu(map<int, Angajat *> angajati_map, ofstream &out)
+{
+    vector<Angajat *> angajati_vec;
+    for (auto angajat : angajati_map)
+    {
+        angajati_vec.push_back(angajat.second);
+    }
     // sortam angajatii dupa salariu
-    sort(angajati.begin(), angajati.end(), [](Angajat *a, Angajat *b)
+    sort(angajati_vec.begin(), angajati_vec.end(), [](Angajat *a, Angajat *b)
          {
         if (a->GetSalariu() != b->GetSalariu())
             return a->GetSalariu() > b->GetSalariu();
@@ -15,6 +29,6 @@ void top3salariu(vector<Angajat *> angajati, ofstream &out)
     out << "Nume,Prenume,Salariu" << endl;
     for (int i = 0; i < 3; i++)
     {
-        out << angajati[i]->GetNume() << "," << angajati[i]->GetPrenume() << "," << angajati[i]->GetSalariu() << endl;
+        out << angajati_vec[i]->GetNume() << "," << angajati_vec[i]->GetPrenume() << "," << angajati_vec[i]->GetSalariu() << endl;
     }
 }

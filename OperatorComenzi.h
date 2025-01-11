@@ -8,7 +8,7 @@ using namespace std;
 class OperatorComenzi : public Angajat
 {
     queue<comanda *> comenzi;
-    vector<comanda *> comenzi_istoric;
+    priority_queue<comanda *> comenzi_istoric;
     int comenzi_curente = 0;
 
 public:

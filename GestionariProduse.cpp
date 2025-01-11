@@ -101,7 +101,7 @@ void StergeProdus(map<int, Produs *> &catalog, int ID)
     }
 }
 
-void AfiseazaDateleUnuiProdus(map<int, Produs *> catalog, int ID)
+void AfisareProdus(map<int, Produs *> catalog, int ID)
 {
     if (catalog[ID] == NULL)
     {

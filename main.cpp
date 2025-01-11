@@ -9,7 +9,7 @@ ofstream raportare1("raport1.csv");
 ofstream raportare2("raport2.csv");
 ofstream raportare3("raport3.csv");
 
-void gestiuneAngajati(vector<Angajat *> &angajati)
+void gestiuneAngajati(map<int, Angajat *> &angajati)
 {
     while (1)
     {
@@ -95,17 +95,21 @@ void gestiuneAngajati(vector<Angajat *> &angajati)
     }
 }
 
-void gestiuneStoc(map<int, Produs *> catalog)
+void gestiuneStoc(map<int, Produs *> &catalog)
 {
     while (1)
     {
+        system("clear");
         cout << "Gestiune stoc" << endl;
         cout << "-----------------" << endl;
         cout << "1. Adauga produs" << endl;
         cout << "2. Afiseaza produse" << endl;
-        cout << "3. Modifica produs" << endl;
+        cout << "3. Modifica stoc produs" << endl;
         cout << "4. Sterge produs" << endl;
+        cout << "5. Afiseaza produs" << endl;
         cout << "0. Inapoi" << endl;
+        cout << "-----------------" << endl;
+        cout << "Introduceti optiunea: ";
         int option;
         cin >> option;
         if (option < 0 || option > 5)
@@ -188,7 +192,7 @@ void procesareComenzi()
     cout << "0. Inapoi" << endl;
 }
 
-void raportare(vector<Angajat *> angajati, map<int, Produs *> catalog)
+void raportare(map<int, Angajat *> angajati, map<int, Produs *> catalog)
 {
     while (1)
     {
@@ -232,21 +236,21 @@ void raportare(vector<Angajat *> angajati, map<int, Produs *> catalog)
     }
 }
 
-void verificaFunctionalitateaMagazinului(vector<Angajat *> angajati, map<int, Produs *> catalog)
+void verificaFunctionalitateaMagazinului(map<int, Angajat *> angajati, map<int, Produs *> catalog)
 {
     // verificare: minim 1 manager, minim 3 operatori, minim 1 asistent
     int manageri = 0, operatori = 0, asistenti = 0;
     for (auto angajat : angajati)
     {
-        if (dynamic_cast<Manager *>(angajat))
+        if (dynamic_cast<Manager *>(angajat.second))
         {
             manageri++;
         }
-        if (dynamic_cast<OperatorComenzi *>(angajat))
+        if (dynamic_cast<OperatorComenzi *>(angajat.second))
         {
             operatori++;
         }
-        if (dynamic_cast<Asistent *>(angajat))
+        if (dynamic_cast<Asistent *>(angajat.second))
         {
             asistenti++;
         }
@@ -291,8 +295,11 @@ void verificaFunctionalitateaMagazinului(vector<Angajat *> angajati, map<int, Pr
         cout << "Prea putine produse" << endl;
         return;
     }
+
+    cout << "Magazinul poate functiona!" << endl;
+    return;
 }
-void meniu(vector<Angajat *> angajati, map<int, Produs *> catalog)
+void meniu(map<int, Angajat *> angajati, map<int, Produs *> catalog)
 {
     while (1)
     {
@@ -338,7 +345,11 @@ void meniu(vector<Angajat *> angajati, map<int, Produs *> catalog)
         if (option == 5)
         {
             system("clear");
-            verificaFunctionalitateaMagazinului(angajati);
+            verificaFunctionalitateaMagazinului(angajati, catalog);
+            cout << "----------------------------------------" << endl;
+            cout << "Apasati orice tasta pentru a continua...";
+            char c;
+            cin >> c;
         }
     }
 }
@@ -346,8 +357,8 @@ void meniu(vector<Angajat *> angajati, map<int, Produs *> catalog)
 int main()
 
 { // testare
-    vector<Angajat *> angajati;
-    ofstream RaportSalarii("raport1.csv");
+    map<int, Angajat *> angajati;
+    map<int, Produs *> catalog;
 
     Manager *Yes = new Manager("John", "Smith", "5050205460021", time(0) - 50000000);
     Asistent *No = new Asistent("Jane", "Doe", "2950101460021", time(0) - 70000000);
@@ -355,12 +366,24 @@ int main()
     OperatorComenzi *Maybe2 = new OperatorComenzi("Joey", "Sarr", "2750303460021", time(0) - 400000);
     OperatorComenzi *Maybe3 = new OperatorComenzi("Jinn", "Darr", "1850202460021", time(0) - 80000000);
     OperatorComenzi *Maybe4 = new OperatorComenzi("Joey", "Sarr", "2750303460021", time(0) - 400000);
-    angajati.push_back(Yes);
-    angajati.push_back(No);
-    angajati.push_back(Maybe);
-    angajati.push_back(Maybe2);
-    angajati.push_back(Maybe3);
-    angajati.push_back(Maybe4);
+
+    angajati[Yes->GetID()] = Yes;
+    angajati[No->GetID()] = No;
+    angajati[Maybe->GetID()] = Maybe;
+    angajati[Maybe2->GetID()] = Maybe2;
+    angajati[Maybe3->GetID()] = Maybe3;
+    angajati[Maybe4->GetID()] = Maybe4;
+
+    Vinil *vinil1 = new Vinil("Vinil1", 10, 100, "casa1", time(0) - 10000000, "trupa1", "album1");
+    CD *cd1 = new CD("CD1", 10, 150, "casa2", time(0) - 20000000, "trupa2", "album2");
+    DiscuriVintage *discuriVintage1 = new DiscuriVintage("DiscuriVintage1", 10, 25, false, 3);
+    ArtVest *artVest1 = new ArtVest("ArtVest1", 10, 35, "culoare1", "marca1");
+
+    catalog[vinil1->GetID()] = vinil1;
+    catalog[cd1->GetID()] = cd1;
+    catalog[discuriVintage1->GetID()] = discuriVintage1;
+    catalog[artVest1->GetID()] = artVest1;
+
     // angajati[1] = new OperatorComenzi("Jane", "Does", "2950101460021", time(0) - 50000000);
     // angajati[2] = new OperatorComenzi("Jinn", "Darr", "1850202460021", time(0) - 70000000);
     // angajati[3] = new OperatorComenzi("Joey", "Sarr", "2750303460021", time(0) - 80000000);
@@ -385,7 +408,7 @@ int main()
 
     vector<Angajat *> AngajatiMagazin;
 
-    meniu(angajati);
+    meniu(angajati, catalog);
 
     return 0;
 }

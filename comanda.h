@@ -39,4 +39,14 @@ public:
     void calculeazaFinal();
     bool completInregistrat();
     bool procesabila();
+
+    friend bool operator<(const comanda &c1, const comanda &c2)
+    {
+        return c1.total_final < c2.total_final;
+    }
+
+    friend bool operator>(const comanda &c1, const comanda &c2)
+    {
+        return c1.total_final > c2.total_final;
+    }
 };

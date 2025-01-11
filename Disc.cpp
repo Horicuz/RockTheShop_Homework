@@ -14,6 +14,7 @@ Disc::Disc(string denumire, int stoc, float baseprice, string casa_de_discuri, t
     this->data_lansare = data_lansare;
     this->trupa = trupa;
     this->album = album;
+    CalculeazaPret();
 }
 
 Disc::Disc(const Disc &disc) : Produs(disc)
@@ -26,9 +27,6 @@ Disc::Disc(const Disc &disc) : Produs(disc)
 
 void Disc::AfisareProdus()
 {
-    cout << "-------------------------" << endl;
-    cout << "Produs: Disc" << endl;
-    cout << "-------------------------" << endl;
     Produs::AfisareProdus();
     cout << "Casa de discuri: " << casa_de_discuri << endl;
     struct tm *timeinfo = localtime(&data_lansare);
@@ -38,6 +36,7 @@ void Disc::AfisareProdus()
     cout << "Trupa: " << trupa << endl;
     cout << "Album: " << album << endl;
     cout << "-------------------------" << endl;
+    cout << endl;
 }
 
 void Disc::CitireProdus(istream &dev)
@@ -51,7 +50,7 @@ void Disc::CitireProdus(istream &dev)
     dev >> day >> month >> year;
     if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900)
     {
-        cout << "Data angajarii invalida!" << endl;
+        cout << "Data lansarii invalida!" << endl;
         return;
     }
     tm.tm_mday = day;
@@ -61,6 +60,8 @@ void Disc::CitireProdus(istream &dev)
     dev >> trupa;
     cout << "Album: ";
     dev >> album;
+    data_lansare = mktime(&tm);
+    CalculeazaPret();
 }
 
 void Disc::SetCasaDeDisc(string casa_de_discuri)
@@ -114,6 +115,6 @@ bool Disc::CompletInregistrat()
 
 void Disc::CalculeazaPret()
 {
-    Produs::CalculeazaPret();
+    price = baseprice;
     price += 5; // Discurile au un adaos de 5 lei pentru livrare CD sau Vinil
 }

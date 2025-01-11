@@ -3,7 +3,7 @@
 DiscuriVintage::DiscuriVintage() : Produs()
 {
     mint = false;
-    coeficient_raritate = -1;
+    coeficient_raritate;
 }
 
 DiscuriVintage::DiscuriVintage(string denumire, int stoc, float baseprice, bool mint, float coeficient_raritate) : Produs(denumire, stoc, baseprice)
@@ -22,6 +22,7 @@ DiscuriVintage::DiscuriVintage(string denumire, int stoc, float baseprice, bool 
         return;
     }
     this->coeficient_raritate = coeficient_raritate;
+    CalculeazaPret();
 }
 
 DiscuriVintage::DiscuriVintage(const DiscuriVintage &discuri) : Produs(discuri)
@@ -39,6 +40,7 @@ void DiscuriVintage::AfisareProdus()
     cout << "Mint: " << mint << endl;
     cout << "Coeficient raritate: " << coeficient_raritate << endl;
     cout << "-------------------------" << endl;
+    cout << endl;
 }
 
 void DiscuriVintage::CitireProdus(istream &dev)
@@ -55,6 +57,7 @@ void DiscuriVintage::CitireProdus(istream &dev)
         return;
     }
     coeficient_raritate = coef;
+    CalculeazaPret();
 }
 
 void DiscuriVintage::SetMint(bool mint)
@@ -105,6 +108,6 @@ void DiscuriVintage::CalculeazaPret()
 {
     if (CompletInregistrat() == false)
         return;
-    Produs::CalculeazaPret();
+    price = baseprice;
     price = price + 15 * coeficient_raritate;
 }

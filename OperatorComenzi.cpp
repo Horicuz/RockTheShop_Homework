@@ -95,5 +95,5 @@ void OperatorComenzi::StergeComanda()
     comanda *Com = comenzi.front();
     comenzi.pop();
     comenzi_curente--;
-    comenzi_istoric.push_back(Com);
+    comenzi_istoric.push(Com);
 }

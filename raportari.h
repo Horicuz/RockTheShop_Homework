@@ -6,4 +6,6 @@
 
 using namespace std;
 
-void top3salariu(vector<Angajat *>, ofstream &);
+void topAngajatNrComenzi(map<int, Angajat *> angajati, ofstream &);
+void top3AngajatiComenzi(map<int, Angajat *> angajati, ofstream &);
+void top3salariu(map<int, Angajat *> angajati, ofstream &);

@@ -5,8 +5,8 @@
 
 using namespace std;
 
-void AdaugaAngajat(vector<Angajat *> &);
-void AfisareAngajati(vector<Angajat *>);
-void ModificaNumeAngajat(vector<Angajat *>, int);
-void StergeAngajat(vector<Angajat *> &, int);
-void AfiseazaDateleUnuiAngajat(vector<Angajat *>, int);
+void AdaugaAngajat(map<int, Angajat *> &);
+void AfisareAngajati(map<int, Angajat *>);
+void ModificaNumeAngajat(map<int, Angajat *>, int);
+void StergeAngajat(map<int, Angajat *> &, int);
+void AfiseazaDateleUnuiAngajat(map<int, Angajat *>, int);

@@ -1,6 +1,6 @@
 #include "GestionariAngajati.h"
 
-void AdaugaAngajat(vector<Angajat *> &angajati)
+void AdaugaAngajat(map<int, Angajat *> &angajati)
 {
     int optiune;
     cout << "1. Manager" << endl;
@@ -20,7 +20,7 @@ void AdaugaAngajat(vector<Angajat *> &angajati)
             manager->CitireAngajat(cin);
             if (manager->CompletInregistrat())
             {
-                angajati.push_back(manager);
+                angajati[manager->GetID()] = manager;
             }
             return;
         }
@@ -30,7 +30,7 @@ void AdaugaAngajat(vector<Angajat *> &angajati)
             operatorComenzi->CitireAngajat(cin);
             if (operatorComenzi->CompletInregistrat())
             {
-                angajati.push_back(operatorComenzi);
+                angajati[operatorComenzi->GetID()] = operatorComenzi;
             }
             return;
         }
@@ -40,14 +40,14 @@ void AdaugaAngajat(vector<Angajat *> &angajati)
             asistent->CitireAngajat(cin);
             if (asistent->CompletInregistrat())
             {
-                angajati.push_back(asistent);
+                angajati[asistent->GetID()] = asistent;
             }
             return;
         }
     }
 }
 
-void AfisareAngajati(vector<Angajat *> angajati)
+void AfisareAngajati(map<int, Angajat *> angajati)
 {
     if (angajati.size() == 0)
     {
@@ -56,49 +56,45 @@ void AfisareAngajati(vector<Angajat *> angajati)
     }
     for (auto angajat : angajati)
     {
-        angajat->AfisareAngajat();
+        angajat.second->AfisareAngajat();
     }
 }
 
-void ModificaNumeAngajat(vector<Angajat *> angajati, int ID)
+void ModificaNumeAngajat(map<int, Angajat *> angajati, int ID)
 {
-    for (auto angajat : angajati)
+    if (angajati.find(ID) != angajati.end())
     {
-        if (angajat->GetID() == ID)
-        {
-            string nume;
-            cout << "Noul nume: ";
-            cin >> nume;
-            angajat->SetNume(nume);
-            return;
-        }
+        angajati[ID]->CitireAngajat(cin);
+        return;
     }
-    cout << "Angajatul nu a fost gasit!" << endl;
+    else
+    {
+        cout << "Angajatul nu a fost gasit!" << endl;
+    }
 }
 
-void StergeAngajat(vector<Angajat *> &angajati, int ID)
+void StergeAngajat(map<int, Angajat *> &angajati, int ID)
 {
-    for (int i = 0; i < angajati.size(); i++)
+    if (angajati.find(ID) != angajati.end())
     {
-        if (angajati[i]->GetID() == ID)
-        {
-            delete angajati[i];
-            angajati.erase(angajati.begin() + i);
-            return;
-        }
+        angajati.erase(ID);
+        return;
     }
-    cout << "Angajatul nu a fost gasit!" << endl;
+    else
+    {
+        cout << "Angajatul nu a fost gasit!" << endl;
+    }
 }
 
-void AfiseazaDateleUnuiAngajat(vector<Angajat *> angajati, int ID)
+void AfiseazaDateleUnuiAngajat(map<int, Angajat *> angajati, int ID)
 {
-    for (auto angajat : angajati)
+    if (angajati.find(ID) != angajati.end())
     {
-        if (angajat->GetID() == ID)
-        {
-            angajat->AfisareAngajat();
-            return;
-        }
+        angajati[ID]->AfisareAngajat();
+        return;
     }
-    cout << "Angajatul nu a fost gasit!" << endl;
+    else
+    {
+        cout << "Angajatul nu a fost gasit!" << endl;
+    }
 }

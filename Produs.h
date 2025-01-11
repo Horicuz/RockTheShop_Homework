@@ -35,8 +35,5 @@ public:
     int GetID();
 
     virtual bool CompletInregistrat(); // verifica daca produsul este complet inregistrat
-    virtual void CalculeazaPret()      // calculeaza pretul produsului
-    {
-        price = baseprice;
-    }
+    virtual void CalculeazaPret();     // calculeaza pretul produsului
 };

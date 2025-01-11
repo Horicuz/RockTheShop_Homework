@@ -10,6 +10,7 @@ ArtVest::ArtVest(string denumire, int stoc, float baseprice, string culoarea, st
 {
     this->culoarea = culoarea;
     this->marca = marca;
+    CalculeazaPret();
 }
 
 ArtVest::ArtVest(const ArtVest &artvest) : Produs(artvest)
@@ -27,6 +28,7 @@ void ArtVest::AfisareProdus()
     cout << "Culoare: " << culoarea << endl;
     cout << "Marca: " << marca << endl;
     cout << "-------------------------" << endl;
+    cout << endl;
 }
 
 void ArtVest::CitireProdus(istream &dev)
@@ -36,6 +38,7 @@ void ArtVest::CitireProdus(istream &dev)
     dev >> culoarea;
     cout << "Marca: ";
     dev >> marca;
+    CalculeazaPret();
 }
 
 void ArtVest::SetCuloare(string culoare)
@@ -77,6 +80,6 @@ bool ArtVest::CompletInregistrat()
 
 void ArtVest::CalculeazaPret()
 {
-    Produs::CalculeazaPret();
+    price = baseprice;
     price += 20; // ArtVest are un adaos de 20 lei pentru livrare
 }
