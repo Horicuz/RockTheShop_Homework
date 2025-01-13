@@ -6,6 +6,7 @@ Manager::Manager()
 
 Manager::Manager(string nume, string prenume, string CNP, time_t DataAngajare) : Angajat(nume, prenume, CNP, DataAngajare)
 {
+    CalculeazaSalariu();
 }
 
 Manager::Manager(const Manager &manager) : Angajat(manager)

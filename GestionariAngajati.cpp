@@ -38,6 +38,7 @@ void AdaugaAngajat(map<int, Angajat *> &angajati)
             }
             else
             {
+                cout << "Angajatul nu este complet inregistrat!" << endl;
                 delete operatorComenzi;
             }
             return;
@@ -76,7 +77,11 @@ void ModificaNumeAngajat(map<int, Angajat *> angajati, int ID)
 {
     if (angajati.find(ID) != angajati.end())
     {
-        angajati[ID]->CitireAngajat(cin);
+        cout << "Nume vechi: " << angajati[ID]->GetNume() << endl;
+        string nume;
+        cout << "Nume nou: ";
+        cin >> nume;
+        angajati[ID]->SetNume(nume);
         return;
     }
     else

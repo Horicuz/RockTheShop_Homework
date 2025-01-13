@@ -279,7 +279,6 @@ void procesareComenzi(map<int, Angajat *> &angajati, priority_queue<comanda *, v
             system("clear");
             intrareComenzi(comenzi_text, catalog, comenzi);
             comenzi_text.close();
-            cout << "Comenzile au fost incarcate cu succes!" << endl;
             cout << "Apasati orice tasta pentru a continua...";
             char c;
             cin >> c;
@@ -308,7 +307,6 @@ void procesareComenzi(map<int, Angajat *> &angajati, priority_queue<comanda *, v
         {
             system("clear");
             AdaugaComanda(catalog, comenzi);
-            cout << "Comanda a fost adaugata cu succes!" << endl;
             cout << "Apasati orice tasta pentru a continua...";
             char c;
             cin >> c;
@@ -395,8 +393,7 @@ void raportare(map<int, Angajat *> angajati, map<int, Produs *> catalog)
         {
             system("clear");
             topAngajatNrComenzi(angajati, raportare1);
-            cout << "Raportul a fost generat cu succes!" << endl;
-            cout << "Fisierul raport3.csv a fost creat!" << endl;
+            cout << "Fisierul raport1.csv a fost creat!" << endl;
             cout << "Apasati orice tasta pentru a continua...";
             char c;
             cin >> c;
@@ -405,8 +402,7 @@ void raportare(map<int, Angajat *> angajati, map<int, Produs *> catalog)
         {
             system("clear");
             top3AngajatiComenzi(angajati, raportare2);
-            cout << "Raportul a fost generat cu succes!" << endl;
-            cout << "Fisierul raport3.csv a fost creat!" << endl;
+            cout << "Fisierul raport2.csv a fost creat!" << endl;
             cout << "Apasati orice tasta pentru a continua...";
             char c;
             cin >> c;
@@ -415,7 +411,6 @@ void raportare(map<int, Angajat *> angajati, map<int, Produs *> catalog)
         {
             system("clear");
             top3salariu(angajati, raportare3);
-            cout << "Raportul a fost generat cu succes!" << endl;
             cout << "Fisierul raport3.csv a fost creat!" << endl;
             cout << "Apasati orice tasta pentru a continua...";
             char c;

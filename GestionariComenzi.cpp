@@ -61,6 +61,7 @@ void AdaugaComanda(map<int, Produs *> catalog, priority_queue<comanda *, vector<
 
 void StergeComanda(priority_queue<comanda *, vector<comanda *>, function<bool(comanda *, comanda *)>> &comenzi, int id)
 {
+    int size_com = comenzi.size();
     vector<comanda *> aux;
     while (!comenzi.empty())
     {
@@ -73,6 +74,10 @@ void StergeComanda(priority_queue<comanda *, vector<comanda *>, function<bool(co
     for (auto &i : aux)
     {
         comenzi.push(i);
+    }
+    if (size_com == comenzi.size())
+    {
+        cout << "Comanda nu exista sau a fost deja procesata! Nu a fost sters nimic!" << endl;
     }
 }
 
@@ -104,13 +109,12 @@ void Procesare(map<int, Angajat *> &angajati, priority_queue<comanda *, vector<c
                         cout << "De la operatorul: " << op->GetNume() << " " << op->GetPrenume() << endl;
                         cout << "-------------------------" << endl;
                         cout << endl;
-                        delete com;
                         proc = 0;
                     }
                     else
                     {
                         op->GetComenzi().front()->SetDurata();
-                        cout << "Asteptam... (+ 1h)" << endl;
+                        cout << "Asteptam... (+ 1h) pt comanda: " << op->GetComenzi().front()->GetID() << endl;
                     }
                 }
             }

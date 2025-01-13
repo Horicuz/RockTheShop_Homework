@@ -6,6 +6,7 @@ OperatorComenzi::OperatorComenzi() : Angajat()
 
 OperatorComenzi::OperatorComenzi(string nume, string prenume, string CNP, time_t DataAngajare) : Angajat(nume, prenume, CNP, DataAngajare)
 {
+    CalculeazaSalariu();
 }
 
 OperatorComenzi::OperatorComenzi(const OperatorComenzi &operatorcomenzi) : Angajat(operatorcomenzi)
@@ -27,7 +28,6 @@ void OperatorComenzi::AfisareAngajat()
         comenzi_copy.pop();
     }
     cout << "-------------------------" << endl;
-    cout << "-------------------------" << endl;
     cout << "Istoric comenzi: " << endl;
     priority_queue<comanda *, vector<comanda *>, function<bool(comanda *, comanda *)>> comenzi_istoric_copy = comenzi_istoric;
     while (!comenzi_istoric_copy.empty())
@@ -35,7 +35,6 @@ void OperatorComenzi::AfisareAngajat()
         comenzi_istoric_copy.top()->AfisareComanda();
         comenzi_istoric_copy.pop();
     }
-    cout << "-------------------------" << endl;
     cout << endl;
 }
 
@@ -54,7 +53,6 @@ void OperatorComenzi::CalculeazaSalariu()
     {
         salariu += 100;
     }
-    // se adauga si de la comenzi...
 }
 
 void OperatorComenzi::SetCNP(string NPC)
@@ -96,6 +94,11 @@ void OperatorComenzi::AdaugaComanda(comanda *comanda)
     comenzi.push(comanda);
 }
 
+void OperatorComenzi::SetSalariu(int bonus)
+{
+    salariu += bonus * 0.005;
+}
+
 void OperatorComenzi::StergeComanda()
 {
     if (comenzi.size() == 0)
@@ -106,6 +109,7 @@ void OperatorComenzi::StergeComanda()
     comanda *Com = comenzi.front();
     comenzi.pop();
     comenzi_istoric.push(Com);
+    SetSalariu(Com->GetTotalFinal());
 }
 
 queue<comanda *> OperatorComenzi::GetComenzi()

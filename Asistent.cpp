@@ -6,6 +6,7 @@ Asistent::Asistent()
 
 Asistent::Asistent(string nume, string prenume, string CNP, time_t DataAngajare) : Angajat(nume, prenume, CNP, DataAngajare)
 {
+    CalculeazaSalariu();
 }
 
 Asistent::Asistent(const Asistent &asistent) : Angajat(asistent)

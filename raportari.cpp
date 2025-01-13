@@ -5,24 +5,29 @@ void topAngajatNrComenzi(map<int, Angajat *> angajati, ofstream &out)
     out.close();
     out.open("raport1.csv", ofstream::out | ofstream::trunc);
 
-    int max = -1;
+    int max123 = 0;
     int id = -1;
     for (auto angajat : angajati)
     {
         if (dynamic_cast<OperatorComenzi *>(angajat.second))
         {
             OperatorComenzi *op = dynamic_cast<OperatorComenzi *>(angajat.second);
-            if (op->GetIstoricComenzi().size() > max)
+            if (op->GetIstoricComenzi().size() >= max123)
             {
-                max = op->GetIstoricComenzi().size();
+                max123 = op->GetIstoricComenzi().size();
                 id = op->GetID();
             }
         }
     }
 
     // cream raportul in fisier .csv
+    if (id == -1)
+    {
+        cout << "Nu exista nicio comanda procesata!" << endl;
+        return;
+    }
     out << "ID,Nume,Prenume,Numar comenzi procesate" << endl;
-    out << id << "," << angajati[id]->GetNume() << "," << angajati[id]->GetPrenume() << "," << max << endl;
+    out << id << "," << angajati[id]->GetNume() << "," << angajati[id]->GetPrenume() << "," << max123 << endl;
 }
 
 void top3AngajatiComenzi(map<int, Angajat *> angajati, ofstream &out)
@@ -32,23 +37,28 @@ void top3AngajatiComenzi(map<int, Angajat *> angajati, ofstream &out)
     out.close();
     out.open("raport2.csv", ofstream::out | ofstream::trunc);
 
-    vector<Angajat *> angajati_vec;
+    vector<OperatorComenzi *> operatori;
     for (auto angajat : angajati)
     {
-        angajati_vec.push_back(angajat.second);
+        if (dynamic_cast<OperatorComenzi *>(angajat.second))
+            if (dynamic_cast<OperatorComenzi *>(angajat.second)->GetIstoricComenzi().size() > 0)
+                operatori.push_back(dynamic_cast<OperatorComenzi *>(angajat.second));
+    }
+
+    if (operatori.size() < 3)
+    {
+        cout << "Nu sunt cel putin 3 operatori cu o comanda procesata in istoric!" << endl;
+        return;
     }
     // sortam angajatii dupa numarul de comenzi procesate
-    sort(angajati_vec.begin(), angajati_vec.end(), [](Angajat *a, Angajat *b)
-         {
-        if (dynamic_cast<OperatorComenzi *>(a) && dynamic_cast<OperatorComenzi *>(b))
-            return dynamic_cast<OperatorComenzi *>(a)->GetIstoricComenzi().top()->GetTotalFinal() > dynamic_cast<OperatorComenzi *>(b)->GetIstoricComenzi().top()->GetTotalFinal();
-        return false; });
+    sort(operatori.begin(), operatori.end(), [](OperatorComenzi *a, OperatorComenzi *b)
+         { return a->GetIstoricComenzi().top()->GetTotalFinal() > b->GetIstoricComenzi().top()->GetTotalFinal(); });
 
     // cream raportul in fisier .csv
     out << "ID,Nume,Prenume,ValoareComanda" << endl;
     for (int i = 0; i < 3; i++)
     {
-        out << angajati_vec[i]->GetID() << "," << angajati_vec[i]->GetNume() << "," << angajati_vec[i]->GetPrenume() << "," << dynamic_cast<OperatorComenzi *>(angajati_vec[i])->GetIstoricComenzi().top()->GetTotalFinal() << endl;
+        out << operatori[i]->GetID() << "," << operatori[i]->GetNume() << "," << operatori[i]->GetPrenume() << "," << operatori[i]->GetIstoricComenzi().top()->GetTotalFinal() << endl;
     }
 }
 

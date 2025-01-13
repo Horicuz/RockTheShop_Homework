@@ -22,6 +22,7 @@ public:
     void AfisareAngajat();
     void CitireAngajat(istream &);
     void SetCNP(string);
+    void SetSalariu(int bonus);
     void CalculeazaSalariu();
     bool CheckBirthDay(string);
 
