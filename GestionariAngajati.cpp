@@ -22,6 +22,10 @@ void AdaugaAngajat(map<int, Angajat *> &angajati)
             {
                 angajati[manager->GetID()] = manager;
             }
+            else
+            {
+                delete manager;
+            }
             return;
         }
         if (optiune == 2)
@@ -32,6 +36,10 @@ void AdaugaAngajat(map<int, Angajat *> &angajati)
             {
                 angajati[operatorComenzi->GetID()] = operatorComenzi;
             }
+            else
+            {
+                delete operatorComenzi;
+            }
             return;
         }
         if (optiune == 3)
@@ -41,6 +49,10 @@ void AdaugaAngajat(map<int, Angajat *> &angajati)
             if (asistent->CompletInregistrat())
             {
                 angajati[asistent->GetID()] = asistent;
+            }
+            else
+            {
+                delete asistent;
             }
             return;
         }

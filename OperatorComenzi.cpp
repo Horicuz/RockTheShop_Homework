@@ -19,6 +19,23 @@ void OperatorComenzi::AfisareAngajat()
     cout << "-------------------------" << endl;
     Angajat::AfisareAngajat();
     cout << "-------------------------" << endl;
+    cout << "Comenzi in lucru: " << endl;
+    queue<comanda *> comenzi_copy = comenzi;
+    while (!comenzi_copy.empty())
+    {
+        comenzi_copy.front()->AfisareComanda();
+        comenzi_copy.pop();
+    }
+    cout << "-------------------------" << endl;
+    cout << "-------------------------" << endl;
+    cout << "Istoric comenzi: " << endl;
+    priority_queue<comanda *, vector<comanda *>, function<bool(comanda *, comanda *)>> comenzi_istoric_copy = comenzi_istoric;
+    while (!comenzi_istoric_copy.empty())
+    {
+        comenzi_istoric_copy.top()->AfisareComanda();
+        comenzi_istoric_copy.pop();
+    }
+    cout << "-------------------------" << endl;
     cout << endl;
 }
 
@@ -64,11 +81,6 @@ bool OperatorComenzi::CheckBirthDay(string CNP)
     return false;
 }
 
-int OperatorComenzi::GetComenziCurente()
-{
-    return comenzi_curente;
-}
-
 void OperatorComenzi::AdaugaComanda(comanda *comanda)
 {
     if (comanda->procesabila() == false)
@@ -76,24 +88,42 @@ void OperatorComenzi::AdaugaComanda(comanda *comanda)
         cout << "Comanda nu poate fi procesata!" << endl;
         return;
     }
-    if (comenzi_curente == 3)
+    if (comenzi.size() == 3)
     {
         cout << "Operatorul are deja 3 comenzi in lucru!" << endl;
         return;
     }
     comenzi.push(comanda);
-    comenzi_curente++;
 }
 
 void OperatorComenzi::StergeComanda()
 {
-    if (comenzi_curente == 0)
+    if (comenzi.size() == 0)
     {
         cout << "Operatorul nu are nicio comanda in lucru!" << endl;
         return;
     }
     comanda *Com = comenzi.front();
     comenzi.pop();
-    comenzi_curente--;
     comenzi_istoric.push(Com);
+}
+
+queue<comanda *> OperatorComenzi::GetComenzi()
+{
+    return comenzi;
+}
+
+void OperatorComenzi::SetComenzi(queue<comanda *> comenzi2)
+{
+    comenzi = comenzi2;
+}
+
+priority_queue<comanda *, vector<comanda *>, function<bool(comanda *, comanda *)>> OperatorComenzi::GetIstoricComenzi()
+{
+    return comenzi_istoric;
+}
+
+void OperatorComenzi::setIstoricComenzi(priority_queue<comanda *, vector<comanda *>, function<bool(comanda *, comanda *)>> comenzi_istoric2)
+{
+    comenzi_istoric = comenzi_istoric2;
 }

@@ -8,7 +8,7 @@ comanda::comanda()
     ID = counter;
     total_base = 0;
     total_final = 0;
-    data_creare_comanda = time(0) + 10;
+    data_creare_comanda;
     durata = -1;
 }
 
@@ -18,6 +18,11 @@ comanda::comanda(vector<pair<int, Produs *>> produse, time_t data_creare_comanda
     ID = counter;
     this->produse = produse;
     this->data_creare_comanda = data_creare_comanda;
+    if (durata < 0 || durata > 100 * 3600)
+    {
+        cout << "Durata invalida!" << endl;
+        return;
+    }
     this->durata = durata;
     calculeazaBase();
     calculeazaFinal();
@@ -34,6 +39,34 @@ comanda::comanda(const comanda &comanda)
     durata = comanda.durata;
 }
 
+void comanda::AfisareComandaDetaliata()
+{
+    cout << "-------------------------" << endl;
+    cout << "Comanda: " << ID << endl;
+    cout << "-------------------------" << endl;
+    cout << "Data creare comanda: ";
+    struct tm *timeinfo = localtime(&data_creare_comanda);
+    cout << (timeinfo->tm_year + 1900) << "-"
+         << (timeinfo->tm_mon + 1) << "-"
+         << timeinfo->tm_mday << endl;
+    cout << "Durata: " << durata / 3600 << " ore" << endl;
+    cout << "-------------------------" << endl;
+    cout << "Produse comandate: " << endl;
+    for (auto &i : produse)
+    {
+        cout << "-------------------------" << endl;
+        cout << "Produs: " << i.second->GetDenumire() << endl;
+        cout << "Numar exemplare comandate: " << i.first << endl;
+        cout << "Pret unitar: " << i.second->GetPrice() << " RON" << endl;
+        cout << "Pret total: " << i.first * i.second->GetPrice() << " RON" << endl;
+        cout << "-------------------------" << endl;
+    }
+    cout << "Total base: " << total_base << " RON" << endl;
+    cout << "Total final: " << total_final << " RON" << endl;
+    cout << "-------------------------" << endl;
+    cout << endl;
+}
+
 void comanda::AfisareComanda()
 {
     cout << "-------------------------" << endl;
@@ -45,14 +78,10 @@ void comanda::AfisareComanda()
          << (timeinfo->tm_mon + 1) << "-"
          << timeinfo->tm_mday << endl;
     cout << "Durata: " << durata / 3600 << " ore" << endl;
-    cout << "Produse: " << endl;
-    for (auto &i : produse)
-    {
-        cout << i.first << " x " << i.second->GetDenumire() << " - " << i.second->GetPrice() << " RON" << endl;
-    }
     cout << "Total base: " << total_base << " RON" << endl;
     cout << "Total final: " << total_final << " RON" << endl;
     cout << "-------------------------" << endl;
+    cout << endl;
 }
 
 void comanda::CitireComanda(istream &dev, map<int, Produs *> catalog)
@@ -60,6 +89,11 @@ void comanda::CitireComanda(istream &dev, map<int, Produs *> catalog)
     int nr_produse;
     // cout << "Numar produse: ";
     dev >> nr_produse;
+    if (nr_produse < 1)
+    {
+        cout << "Numar produse invalid!" << endl;
+        return;
+    }
     for (int i = 0; i < nr_produse; i++)
     {
         int ID;
@@ -89,10 +123,58 @@ void comanda::CitireComanda(istream &dev, map<int, Produs *> catalog)
     tm.tm_mon = month1 - 1;
     tm.tm_year = year1 - 1900;
     data_creare_comanda = mktime(&tm);
-    int hours, minutes, seconds;
+    int hours;
     // cout << "Durata: ";
     dev >> hours;
+    if (hours < 1)
+    {
+        cout << "Durata invalida!" << endl;
+        return;
+    }
+
     durata = hours * 3600;
+    calculeazaBase();
+    calculeazaFinal();
+}
+
+void comanda::CitireComandaAcum(istream &dev, map<int, Produs *> catalog)
+{
+    int nr_produse;
+    cout << "Numar produse: ";
+    dev >> nr_produse;
+    if (nr_produse < 1)
+    {
+        cout << "Numar produse invalid!" << endl;
+        return;
+    }
+    for (int i = 0; i < nr_produse; i++)
+    {
+        int ID;
+        cout << "ID produs: ";
+        dev >> ID;
+        if (catalog.find(ID) == catalog.end())
+        {
+            cout << "Produsul nu exista!" << endl;
+            return;
+        }
+        Produs *produs = catalog[ID];
+        int nr;
+        cout << "Numar exemplare produs dorit: ";
+        dev >> nr;
+        produse.push_back(make_pair(nr, produs));
+    }
+    int hours;
+    cout << "Durata: ";
+    dev >> hours;
+    if (hours < 1)
+    {
+        cout << "Durata invalida!" << endl;
+        return;
+    }
+    durata = hours * 3600;
+    time_t now = time(0);
+    struct tm *ltm = localtime(&now);
+    data_creare_comanda = mktime(ltm);
     calculeazaBase();
     calculeazaFinal();
 }
@@ -105,6 +187,11 @@ time_t comanda::GetDataCreareComanda()
 time_t comanda::GetDurata()
 {
     return durata;
+}
+
+void comanda::SetDurata()
+{
+    durata = durata - 3600;
 }
 
 int comanda::GetID()
@@ -147,7 +234,7 @@ void comanda::calculeazaFinal()
 
 bool comanda::completInregistrat()
 {
-    if (produse.size() == 0 || data_creare_comanda > time(0) || durata == -1)
+    if (produse.size() == 0 || durata == -1)
     {
         return false;
     }

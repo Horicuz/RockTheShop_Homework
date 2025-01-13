@@ -5,6 +5,8 @@
 #include "CD.h"
 #include "Vinil.h"
 #include <vector>
+#include <queue>
+#include <functional>
 #include <ctime>
 #include <map>
 
@@ -26,10 +28,13 @@ public:
     comanda(const comanda &);
 
     void AfisareComanda();
+    void AfisareComandaDetaliata();
     void CitireComanda(istream &, map<int, Produs *>);
+    void CitireComandaAcum(istream &, map<int, Produs *>);
 
     time_t GetDataCreareComanda();
     time_t GetDurata();
+    void SetDurata();
     int GetID();
     vector<pair<int, Produs *>> GetProduse();
     float GetTotalBase();
@@ -39,14 +44,4 @@ public:
     void calculeazaFinal();
     bool completInregistrat();
     bool procesabila();
-
-    friend bool operator<(const comanda &c1, const comanda &c2)
-    {
-        return c1.total_final < c2.total_final;
-    }
-
-    friend bool operator>(const comanda &c1, const comanda &c2)
-    {
-        return c1.total_final > c2.total_final;
-    }
 };
