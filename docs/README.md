@@ -146,7 +146,7 @@ g++ -std=c++17 src/*.cpp -o rock-the-shop
 ## Feedback and Contributions
 
 The CONTRIBUTING.md file provides details on how to contribute to the project.
-For issues or suggestions, please open an [Issue](https://github.com/username/rock-the-shop/issues).
+For issues or suggestions, please open an [Issue](https://github.com/horicuz/rocktheshop_homework/issues).
 
 ---
 
