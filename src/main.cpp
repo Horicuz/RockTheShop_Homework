@@ -6,9 +6,9 @@
 
 using namespace std;
 
-ofstream raportare1("raport1.csv");
-ofstream raportare2("raport2.csv");
-ofstream raportare3("raport3.csv");
+ofstream raportare1("reports/raport1.csv");
+ofstream raportare2("reports/raport2.csv");
+ofstream raportare3("reports/raport3.csv");
 
 bool verificaFunctionalitateaMagazinului(map<int, Angajat *> angajati, map<int, Produs *> catalog)
 {
@@ -41,7 +41,7 @@ bool verificaFunctionalitateaMagazinului(map<int, Angajat *> angajati, map<int, 
         cin >> c;
         return false;
     }
-    // Dacă magazinul nu are în stoc măcar 2 produse din fiecare tip nu poate funcționa
+    // Daca magazinul nu are in stoc macar 2 produse din fiecare tip nu poate functiona
     int artVest = 0, discuri = 0, discuriVintage = 0;
     for (auto produs : catalog)
     {
@@ -275,7 +275,7 @@ void procesareComenzi(map<int, Angajat *> &angajati, priority_queue<comanda *, v
         }
         if (option == 1)
         {
-            ifstream comenzi_text("comenzi.txt");
+            ifstream comenzi_text("data/comenzi.txt");
             system("clear");
             intrareComenzi(comenzi_text, catalog, comenzi);
             comenzi_text.close();

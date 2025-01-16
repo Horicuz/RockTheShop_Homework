@@ -3,7 +3,6 @@
 DiscuriVintage::DiscuriVintage() : Produs()
 {
     mint = false;
-    coeficient_raritate;
 }
 
 DiscuriVintage::DiscuriVintage(string denumire, int stoc, float baseprice, bool mint, float coeficient_raritate) : Produs(denumire, stoc, baseprice)

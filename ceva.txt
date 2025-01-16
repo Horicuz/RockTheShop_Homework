@@ -1,1 +1,0 @@
-g++ main.cpp Angajat.cpp Asistent.cpp OperatorComenzi.cpp Manager.cpp GestionariAngajati.cpp GestionariProduse.cpp raportari.cpp -o main && ./main

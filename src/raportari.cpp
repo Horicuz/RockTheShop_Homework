@@ -3,7 +3,7 @@
 void topAngajatNrComenzi(map<int, Angajat *> angajati, ofstream &out)
 { // angajatul cu cele mai multe comenzi procesate
     out.close();
-    out.open("raport1.csv", ofstream::out | ofstream::trunc);
+    out.open("reports/raport1.csv", ofstream::out | ofstream::trunc);
 
     int max123 = 0;
     int id = -1;
@@ -32,10 +32,10 @@ void topAngajatNrComenzi(map<int, Angajat *> angajati, ofstream &out)
 
 void top3AngajatiComenzi(map<int, Angajat *> angajati, ofstream &out)
 {
-    // top 3 angajați care au gestionat cele mai valoroase comenzi (în valoare sunt incluse
-    // costurile de impachetare și livrare) – ordonați descrescător in funcție de valoarea comenzii
+    // top 3 angajati care au gestionat cele mai valoroase comenzi (in valoare sunt incluse
+    // costurile de impachetare si livrare) – ordonati descrescator in functie de valoarea comenzii
     out.close();
-    out.open("raport2.csv", ofstream::out | ofstream::trunc);
+    out.open("reports/raport2.csv", ofstream::out | ofstream::trunc);
 
     vector<OperatorComenzi *> operatori;
     for (auto angajat : angajati)
@@ -65,7 +65,7 @@ void top3AngajatiComenzi(map<int, Angajat *> angajati, ofstream &out)
 void top3salariu(map<int, Angajat *> angajati_map, ofstream &out)
 {
     out.close();
-    out.open("raport3.csv", ofstream::out | ofstream::trunc);
+    out.open("reports/raport3.csv", ofstream::out | ofstream::trunc);
 
     vector<Angajat *> angajati_vec;
     for (auto angajat : angajati_map)
