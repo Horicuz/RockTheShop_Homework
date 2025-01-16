@@ -103,18 +103,18 @@
 
 ## 1. Initial Setup
 1. Clone the project:
-  ```bash
-   git clone https://github.com/username/rock-the-shop.git
-   cd rock-the-shop
-  ```
+```bash
+git clone https://github.com/username/rock-the-shop.git
+cd rock-the-shop
+```
 2. Compile the code:
-   ```bash
-   g++ -std=c++17 src/*.cpp -o rock-the-shop
-    ```
+```bash
+g++ -std=c++17 src/*.cpp -o rock-the-shop
+```
 3. Run the application:
-   ```bash
-   ./rock-the-shop
-    ```
+```bash
+./rock-the-shop
+ ```
    
 ## Main Functionalities
 - Select desired options from the interactive menu.
