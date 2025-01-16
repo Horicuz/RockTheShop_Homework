@@ -384,6 +384,7 @@ void raportare(map<int, Angajat *> angajati, map<int, Produs *> catalog)
         if (option < 0 || option > 3)
         {
             cout << "Optiune invalida! Introduceti optiunea: ";
+            // trademark horicuz
         }
         if (option == 0)
         {

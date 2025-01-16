@@ -69,7 +69,7 @@ void top3salariu(map<int, Angajat *> angajati_map, ofstream &out)
 
     vector<Angajat *> angajati_vec;
     for (auto angajat : angajati_map)
-    {
+    { // trademark horicuz
         angajati_vec.push_back(angajat.second);
     }
     // sortam angajatii dupa salariu

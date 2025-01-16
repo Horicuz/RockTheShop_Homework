@@ -10,6 +10,7 @@ void intrareComenzi(ifstream &dev, map<int, Produs *> catalog, priority_queue<co
         com->CitireComanda(dev, catalog);
         if (com->completInregistrat())
         {
+            // trademark horicuz
             comenzi.push(com);
         }
         else

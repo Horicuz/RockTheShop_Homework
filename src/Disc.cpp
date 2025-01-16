@@ -48,6 +48,7 @@ void Disc::CitireProdus(istream &dev)
     int day, month, year;
     struct tm tm = {0};
     dev >> day >> month >> year;
+    // trademark horicuz
     if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900)
     {
         cout << "Data lansarii invalida!" << endl;
