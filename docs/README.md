@@ -99,9 +99,7 @@
 
 ## How to Use
 
-# How to Use
-
-## 1. Initial Setup
+### Initial Setup
 1. Clone the project:
 ```bash
 git clone https://github.com/username/rock-the-shop.git
